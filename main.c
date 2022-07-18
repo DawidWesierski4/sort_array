@@ -1,3 +1,21 @@
+/*==============================================================================
+* Title: Sorting an array of strings 
+*
+* Author: Dawid Wesierski
+* Language: C
+* To Compile: gcc 11.2.0
+* Version: 0.1.0.0
+* Date: 18.07.2022 
+*
+* ------------------------------------------------------------------------------
+* 
+* Description:
+* this program shows the implementation the algorithm that sorts an array of 
+*strings in 4 diffrent ways one of them is lexicographic_sort (that takes the|
+*dictionary approach when you sort by the order of the letters)
+* 
+*=============================================================================*/
+
 #include "sort_array.h"
 
 int main() 
