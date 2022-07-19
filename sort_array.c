@@ -17,7 +17,7 @@ int lexicographic_sort(const char *b, const char *a)
             return -1;
 
         i++;
-    }while (a[i] != '\0');
+    }while(a[i] != '\0');
 
     return 0;
 }
@@ -30,6 +30,7 @@ int lexicographic_sort_reverse(const char *a, const char *b)
 
 
 //it counts upper and lower case characters speratly so "Aa" count = 2
+//all the other characters are being ignored so "1231#*&@*" count = 0
 int count_distinct_characters(const char *a)
 {
     int i;
@@ -39,7 +40,7 @@ int count_distinct_characters(const char *a)
     bool switches_alphabet_uppercase[26] = { false };
     bool *switches_alphabet;
 
-    for(i=0;a[i] != '\0';i++)
+    for(i=0; a[i] != '\0'; i++)
     {
         if(a[i] >= 'a' && a[i] <= 'z')
         {
@@ -82,9 +83,12 @@ int sort_by_number_of_distinct_characters(const char *a, const char *b)
 
 int sort_by_length(const char *a, const char *b)
 {
-    if(strlen(a) < strlen(b))
+    int size_a = strlen(a);
+    int size_b = strlen(b);
+
+    if(size_a < size_b)
         return 1;
-    else if (strlen(a) > strlen((b)))
+    else if (size_a > size_b)
         return -1;
     else
         return lexicographic_sort (a,b);
@@ -113,11 +117,11 @@ int quick_sort_part(char** arr,int p, int q,
         if(cmp_func(arr[j],pivot) > 0)
         {
             i++;
-            swap((void**)(&arr[i]),(void**)(&arr[j]));
+            swap((void**)(&arr[i]), (void**)(&arr[j]));
         }
     }
 
-    swap((void**)(&arr[i + 1]),(void**)(&arr[q]));
+    swap((void**)(&arr[i + 1]), (void**)(&arr[q]));
     return (i + 1);
 }
 
@@ -129,7 +133,7 @@ void quick_sort(char **arr,const int p, const int q,
 
     if (p < q)
     {
-        pivot = quick_sort_part(arr, p, q,cmp_func);
+        pivot = quick_sort_part(arr, p, q, cmp_func);
         quick_sort(arr, p, pivot - 1, cmp_func);
         quick_sort(arr, pivot + 1, q, cmp_func);
     }
@@ -139,5 +143,5 @@ void quick_sort(char **arr,const int p, const int q,
 void string_sort(char **arr,const int len,
                  int (*cmp_func)(const char *a, const char *b))
 {
-    quick_sort(arr, 0,len - 1,cmp_func);
+    quick_sort(arr, 0, len - 1, cmp_func);
 }

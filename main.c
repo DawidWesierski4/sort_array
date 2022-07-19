@@ -26,7 +26,7 @@ int main()
     int n;
     scanf("%d", &n);
 
-    char** arr;
+    char **arr;
     arr = (char**)malloc(n * sizeof(char*));
 
     for(int i = 0; i < n; i++){
