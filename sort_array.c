@@ -1,53 +1,64 @@
 #include "sort_array.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
 
-int lexicographic_sort(const char* b, const char* a)
+int lexicographic_sort(const char *b, const char *a)
 {
-    int size;
-    int i;
-    bool equal = false;
+    int i = 0;
 
-    if (strlen(b) > strlen(a))
-        size = strlen(a);
-    else
-        size = strlen(b);
-
-    for(i=0; i<size; i++)
+    do
     {
         if(a[i] > b[i])
             return 1;
 
         else if(a[i] < b[i])
-            return 0;
-    }
+            return -1;
 
-    if(strlen(b) > strlen(a))
-        return 0;
-    else
-        return 1;
+        i++;
+    }while (a[i] != '\0');
 
     return 0;
 }
 
 
-int lexicographic_sort_reverse(const char* a, const char* b)
+int lexicographic_sort_reverse(const char *a, const char *b)
 {
     return (lexicographic_sort(b,a));
 }
 
 
-int count_distinct_characters(const char* a)
+//it counts upper and lower case characters speratly so "Aa" count = 2
+int count_distinct_characters(const char *a)
 {
     int i;
-    int size = strlen(a);
     int counter = 0;
-    bool switches_alphabet[26] = { false };
+    char char_substract;
+    bool switches_alphabet_lowercase[26] = { false };
+    bool switches_alphabet_uppercase[26] = { false };
+    bool *switches_alphabet;
 
-    for(i=0;i<size;i++)
+    for(i=0;a[i] != '\0';i++)
     {
-        if(switches_alphabet[((int)(a[i] - 'a'))])
+        if(a[i] >= 'a' && a[i] <= 'z')
+        {
+            char_substract = 'a';
+            switches_alphabet = switches_alphabet_lowercase;
+        }
+
+        else if(a[i] >= 'A' && a[i] <= 'Z')
+        {
+            char_substract = 'A';
+            switches_alphabet = switches_alphabet_uppercase;
+        }
+        else
             continue;
 
-        switches_alphabet[a[i] - 'a'] = true;
+        if(switches_alphabet[(a[i] - char_substract)])
+            continue;
+
+        switches_alphabet[a[i] - char_substract] = true;
         counter++;
     }
 
@@ -55,18 +66,13 @@ int count_distinct_characters(const char* a)
 }
 
 
-int sort_by_number_of_distinct_characters(const char* a, const char* b)
+int sort_by_number_of_distinct_characters(const char *a, const char *b)
 {
-    int counter = 0;
-
-    int i;
-    bool switches_alphabet[25];
-
     int size_a = count_distinct_characters(a);
     int size_b = count_distinct_characters(b);
 
     if(size_a > size_b)
-        return 0;
+        return -1;
     else if(size_a < size_b)
         return 1;
     else
@@ -74,18 +80,18 @@ int sort_by_number_of_distinct_characters(const char* a, const char* b)
 }
 
 
-int sort_by_length(const char* a, const char* b)
+int sort_by_length(const char *a, const char *b)
 {
     if(strlen(a) < strlen(b))
         return 1;
     else if (strlen(a) > strlen((b)))
-        return 0;
+        return -1;
     else
         return lexicographic_sort (a,b);
 }
 
 
-void swap(void** one, void** two)
+void swap(void **one, void **two)
 {
     void *aux;
     aux = *one;
@@ -96,41 +102,42 @@ void swap(void** one, void** two)
 
 //we are using last element as Pivot
 int quick_sort_part(char** arr,int p, int q,
-                    int (*cmp_func)(const char* a, const char* b))
+                    int (*cmp_func)(const char *a, const char *b))
 {
     char* pivot = arr[q];
-    int i = (p -1);
+    int i = (p - 1);
     int j;
 
-    for(j=p; j<=q - 1; j++)
+    for(j=p; j <= q - 1; j++)
     {
-        if(cmp_func(arr[j],pivot))
+        if(cmp_func(arr[j],pivot) > 0)
         {
             i++;
-            swap(&arr[i],&arr[j]);
+            swap((void**)(&arr[i]),(void**)(&arr[j]));
         }
     }
 
-    swap(&arr[i+1],&arr[q]);
-    return (i+1);
+    swap((void**)(&arr[i + 1]),(void**)(&arr[q]));
+    return (i + 1);
 }
 
 
-void quick_sort(char** arr,const int p, const int q,
-                int (*cmp_func)(const char* a, const char* b))
+void quick_sort(char **arr,const int p, const int q,
+                int (*cmp_func)(const char *a, const char *b))
 {
     int pivot;
+
     if (p < q)
     {
         pivot = quick_sort_part(arr, p, q,cmp_func);
-        quick_sort(arr, p, pivot-1, cmp_func);
-        quick_sort(arr, pivot+1, q, cmp_func);
+        quick_sort(arr, p, pivot - 1, cmp_func);
+        quick_sort(arr, pivot + 1, q, cmp_func);
     }
 }
 
 
-void string_sort(char** arr,const int len,
-                int (*cmp_func)(const char* a, const char* b))
+void string_sort(char **arr,const int len,
+                 int (*cmp_func)(const char *a, const char *b))
 {
-    quick_sort(arr, 0,len -1,cmp_func);
+    quick_sort(arr, 0,len - 1,cmp_func);
 }

@@ -1,10 +1,7 @@
 #ifndef SORT_ARRAY_H
 #define SORT_ARRAY_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
+
 
 int lexicographic_sort(const char* a, const char* b);
 
@@ -17,4 +14,4 @@ int sort_by_length(const char* a, const char* b);
 void string_sort(char** arr,const int len,
                 int (*cmp_func)(const char* a, const char* b));
 
-#endif
+#endif /* SORT_ARRAY */
