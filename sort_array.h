@@ -2,7 +2,6 @@
 #define SORT_ARRAY_H
 
 
-
 int lexicographic_sort(const char* a, const char* b);
 
 int lexicographic_sort_reverse(const char* a, const char* b);

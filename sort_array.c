@@ -47,7 +47,6 @@ int count_distinct_characters(const char *a)
             char_substract = 'a';
             switches_alphabet = switches_alphabet_lowercase;
         }
-
         else if(a[i] >= 'A' && a[i] <= 'Z')
         {
             char_substract = 'A';
